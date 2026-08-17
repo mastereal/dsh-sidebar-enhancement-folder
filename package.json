@@ -1,12 +1,12 @@
 {
-  "name": "sidebar-enhancement-folder",
-  "version": "1.0.0",
+  "name": "dsh-sidebar-enhancement-folder",
+  "version": "1.0.1",
   "description": "Reveal the containing folder of any file open in a dsh-better-sidebar editor tab (explorer /select), one button per tab",
   "license": "MIT",
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mastereal/sidebar-enhancement-folder"
+    "url": "https://github.com/mastereal/dsh-sidebar-enhancement-folder"
   },
   "publishConfig": {
     "access": "public"
