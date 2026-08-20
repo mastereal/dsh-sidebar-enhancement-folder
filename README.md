@@ -22,7 +22,7 @@
 ## 功能
 
 - **每标签一个按钮**：内嵌在工具栏行内（md/html 在预览/编辑旁边；PDF/图片/二进制在标题栏），非活动标签也有效，切换到它就显示
-- **指向自己的文件**：按钮路径取自该标签自己的 `editorTitle`，没有"活动窗格"判断逻辑
+- **指向自己的文件**：按钮路径取自该标签自己的 `editorPathInput[title=路径]`（0.14 起），没有"活动窗格"判断逻辑
 - **跟随布局**：按钮活在窗格自己的 DOM 里，拖标签/拆分窗格/调宽度都跟着走；自愈机制每轮清理重复/残留按钮
 - **Windows 定位可靠**：`explorer /select` 参数经过真实窗口标题验证（`windowsVerbatimArguments` + 引号），支持带空格/中文的文件名；文件缺失时自动上溯到最近存在的目录
 - **宿主侧路径解析**：剥离 `file://` 前缀，相对路径按会话工作目录解析
@@ -30,14 +30,14 @@
 ## 依赖
 
 - DeepSeek Harness（DSH）Web GUI
-- [dsh-better-sidebar](https://github.com/omdsh-dev/DSH-better-sidebar) ^0.12（依赖其 `paneTab`/`editorTitle`/`editorModeToggle` 类名后缀）
+- [dsh-better-sidebar](https://github.com/omdsh-dev/DSH-better-sidebar) ^0.14（v1.0.2+ 已适配 0.14：路径源改为 `editorPathInput[title=路径]`）
 - **仅 Windows**（使用 `explorer.exe /select`）
 
 ## 安装
 
 ```sh
 # 从 GitHub release 安装（tarball）
-dsh plugin --profile web add https://github.com/mastereal/dsh-sidebar-enhancement-folder/archive/refs/tags/v1.0.1.tar.gz
+dsh plugin --profile web add https://github.com/mastereal/dsh-sidebar-enhancement-folder/archive/refs/tags/v1.0.4.tar.gz
 ```
 
 装完重启 `dsh web`，浏览器**硬刷新（Ctrl+Shift+R）**，并**关闭所有旧 DSH 窗口/标签页**（旧实例会残留旧代码，造成按钮重复）。
@@ -50,7 +50,7 @@ dsh plugin --profile web add https://github.com/mastereal/dsh-sidebar-enhancemen
 
 控制台日志前缀 `[dsh-sidebar-enhancement-folder]`：
 
-- `client loaded (v1.0.1)` —— 浏览器端已加载
+- `client loaded (v1.0.4)` —— 浏览器端已加载
 - `paneTabs: editors=N buttons=M` —— 按钮同步计数
 - `reveal clicked: <路径>` —— 发送给宿主的路径
 
@@ -58,7 +58,7 @@ dsh plugin --profile web add https://github.com/mastereal/dsh-sidebar-enhancemen
 
 ## 工作原理（简）
 
-better-sidebar 会把所有标签的内容都渲染进 DOM（非活动标签只是 `display:none`），且每个 editor 标签必有 `span[class*="editorTitle"][title=路径]`。客户端给每个 `paneTab` 的工具栏嵌入一个按钮、从该 paneTab 自己的 `editorTitle` 读取路径，再由防抖自愈（store 订阅 + MutationObserver + 2 秒心跳）清理重复/残留并在布局变化后重建。宿主路由为 `/dsh-sidebar-enhancement-folder/reveal`。
+better-sidebar 会把所有标签的内容都渲染进 DOM（非活动标签只是 `display:none`），且每个 editor 标签必有 `input[class*="editorPathInput"][title=路径]`（0.14 起，旧版是 `span.editorTitle`）。客户端给每个 `paneTab` 的工具栏嵌入一个按钮、从该 paneTab 自己的 `editorPathInput` 读取路径，再由防抖自愈（store 订阅 + MutationObserver + 2 秒心跳）清理重复/残留并在布局变化后重建。宿主路由为 `/dsh-sidebar-enhancement-folder/reveal`；v1.0.4 起 reveal 后会把资源管理器窗口激活到前台（模拟 Alt + SetForegroundWindow，解决后台进程打开不置顶），v1.0.3 起按钮图标为文件夹+放大镜（与 0.14 原生「文件树面板」按钮的纯文件夹图标区分）。
 
 ## 许可
 

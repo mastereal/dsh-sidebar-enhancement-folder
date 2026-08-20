@@ -1,6 +1,6 @@
 {
   "name": "dsh-sidebar-enhancement-folder",
-  "version": "1.0.1",
+  "version": "1.0.4",
   "description": "Reveal the containing folder of any file open in a dsh-better-sidebar editor tab (explorer /select), one button per tab",
   "license": "MIT",
   "type": "module",
