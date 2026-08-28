@@ -37,7 +37,7 @@
 
 ```sh
 # 从 GitHub release 安装（tarball）
-dsh plugin --profile web add https://github.com/mastereal/dsh-sidebar-enhancement-folder/archive/refs/tags/v1.0.4.tar.gz
+dsh plugin --profile web add https://github.com/mastereal/dsh-sidebar-enhancement-folder/archive/refs/tags/v1.0.5.tar.gz
 ```
 
 装完重启 `dsh web`，浏览器**硬刷新（Ctrl+Shift+R）**，并**关闭所有旧 DSH 窗口/标签页**（旧实例会残留旧代码，造成按钮重复）。
@@ -50,7 +50,7 @@ dsh plugin --profile web add https://github.com/mastereal/dsh-sidebar-enhancemen
 
 控制台日志前缀 `[dsh-sidebar-enhancement-folder]`：
 
-- `client loaded (v1.0.4)` —— 浏览器端已加载
+- `client loaded (v1.0.5)` —— 浏览器端已加载
 - `paneTabs: editors=N buttons=M` —— 按钮同步计数
 - `reveal clicked: <路径>` —— 发送给宿主的路径
 
@@ -58,7 +58,7 @@ dsh plugin --profile web add https://github.com/mastereal/dsh-sidebar-enhancemen
 
 ## 工作原理（简）
 
-better-sidebar 会把所有标签的内容都渲染进 DOM（非活动标签只是 `display:none`），且每个 editor 标签必有 `input[class*="editorPathInput"][title=路径]`（0.14 起，旧版是 `span.editorTitle`）。客户端给每个 `paneTab` 的工具栏嵌入一个按钮、从该 paneTab 自己的 `editorPathInput` 读取路径，再由防抖自愈（store 订阅 + MutationObserver + 2 秒心跳）清理重复/残留并在布局变化后重建。宿主路由为 `/dsh-sidebar-enhancement-folder/reveal`；v1.0.4 起 reveal 后会把资源管理器窗口激活到前台（模拟 Alt + SetForegroundWindow，解决后台进程打开不置顶），v1.0.3 起按钮图标为文件夹+放大镜（与 0.14 原生「文件树面板」按钮的纯文件夹图标区分）。
+better-sidebar 会把所有标签的内容都渲染进 DOM（非活动标签只是 `display:none`），且每个 editor 标签必有 `input[class*="editorPathInput"][title=路径]`（0.14 起，旧版是 `span.editorTitle`）。客户端给每个 `paneTab` 的工具栏嵌入一个按钮、从该 paneTab 自己的 `editorPathInput` 读取路径，再由防抖自愈（store 订阅 + MutationObserver + 2 秒心跳）清理重复/残留并在布局变化后重建。宿主路由为 `/dsh-sidebar-enhancement-folder/reveal`；v1.0.5 起 reveal 后会把资源管理器窗口激活到前台（模拟 Alt + SetForegroundWindow，解决后台进程打开不置顶），v1.0.3 起按钮图标为文件夹+放大镜（与 0.14 原生「文件树面板」按钮的纯文件夹图标区分）。
 
 ## 许可
 
